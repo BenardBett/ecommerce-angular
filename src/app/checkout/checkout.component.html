@@ -1,0 +1,60 @@
+<div class="checkout-page">
+  <h2>Checkout</h2>
+  <form [formGroup]="checkoutForm" (ngSubmit)="onPlaceOrder()" class="checkout-form">
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" placeholder="Enter your name" />
+      <div *ngIf="f['name'].touched && f['name'].invalid" class="error">
+        <small *ngIf="f['name'].errors?.['required']">Name is required.</small>
+        <small *ngIf="f['name'].errors?.['minlength']">Name must be at least 3 characters long.</small>
+      </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" placeholder="Enter your email" />
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="error">
+        <small *ngIf="f['email'].errors?.['required']">Email is required.</small>
+        <small *ngIf="f['email'].errors?.['email']">Invalid email address.</small>
+      </div>
+    </div>
+
+    <!-- Address Field -->
+    <div class="form-group">
+      <label for="address">Shipping Address</label>
+      <textarea id="address" formControlName="address" placeholder="Enter your address" rows="3"></textarea>
+      <div *ngIf="f['address'].touched && f['address'].invalid" class="error">
+        <small *ngIf="f['address'].errors?.['required']">Address is required.</small>
+        <small *ngIf="f['address'].errors?.['minlength']">Address must be at least 10 characters long.</small>
+      </div>
+    </div>
+
+    <!-- Payment Field -->
+    <div class="form-group">
+      <label for="payment">Payment Method</label>
+      <select id="payment" formControlName="payment">
+        <option value="" disabled>Select a payment method</option>
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cash">Cash on Delivery</option>
+      </select>
+      <div *ngIf="f['payment'].touched && f['payment'].invalid" class="error">
+        <small *ngIf="f['payment'].errors?.['required']">Payment method is required.</small>
+      </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading">Processing your order...</div>
+
+    <!-- Success Message -->
+    <div *ngIf="isSuccess" class="success">Order placed successfully!</div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="checkoutForm.invalid" class="btn">Place Order</button>
+  </form>
+</div>
